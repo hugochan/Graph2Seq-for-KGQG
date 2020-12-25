@@ -1,0 +1,138 @@
+# Data
+dataset_name: 'mhqg-pq'
+trainset: '../data/mhqg-pq/train.json'
+devset: '../data/mhqg-pq/dev.json'
+testset: '../data/mhqg-pq/test.json'
+pretrained_word_embed_file: '../data/glove.840B.300d.txt'
+wmd_emb_file: null
+saved_vocab_file: '../data/mhqg-pq/vocab_model_min3'
+pretrained: '../out/mhqg-pq/graph2seq_edge_pair_fuse'
+
+# Output
+out_dir: null
+
+
+# Preprocessing
+top_word_vocab: 20000
+min_word_freq: 3
+max_dec_steps: 26 # 26! Including the EOS symbol
+
+
+# Model architecture
+model_name: 'graph2seq'
+levi_graph: False
+
+# Embedding
+word_embed_dim: 300
+fix_word_embed: True
+f_ans: False
+dan_type: 'word'
+f_ans_match: True
+f_ans_pool: False
+f_node_type: False
+kg_emb: False
+entity_emb_dim: 50
+entity_type_emb_dim: 50
+relation_emb_dim: 50
+ans_match_emb_dim: 24 # 24!
+
+
+hidden_size: 300
+rnn_type: 'lstm'
+dec_hidden_size: 300  # if set, a matrix will transform enc state into dec state
+enc_bidi: True
+num_enc_rnn_layers: 1
+rnn_size: 300
+
+
+# Attention & copy
+enc_attn: True  # decoder has attention over encoder states?
+dec_attn: False  # decoder has attention over previous decoder states?
+pointer: True  # use pointer network (copy mechanism) in addition to word generator?
+out_embed_size: null  # if set, use an additional layer before decoder output
+tie_embed: True  # tie the decoder output layer to the input embedding layer?
+
+
+# Coverage (to turn on/off, change both `enc_attn_cover` and `cover_loss`)
+enc_attn_cover: False # False! # provide coverage as input when computing enc attn?
+cover_func: 'sum'  # how to aggregate previous attention distributions? sum or max
+cover_loss: 0 # 0! add coverage loss if > 0; weight of coverage loss as compared to NLLLoss
+show_cover_loss: True  # include coverage loss in the loss shown in the progress bar?
+
+
+# Regularization
+word_dropout: 0.4 # 0.4!
+dropoutagg: 0 # dropout for regularization, used after each aggregator. 0 = no dropout
+enc_rnn_dropout: 0.3 # 0.3!
+# dec_rnn_dropout: 0.3
+dec_in_dropout: 0
+dec_out_dropout: 0
+eps_label_smoothing: 0.2 # 0.2!
+
+
+# Graph neural networks
+graph_type: 'static' # 'static'
+graph_direction: 'all' # 'all', 'forward', 'backward'
+message_function: 'edge_pair' # 'edge_pair', 'no_edge'
+graph_hops: 3 # 3!
+
+
+# # Bert configure
+use_bert: False
+finetune_bert: False
+use_bert_weight: True
+use_bert_gamma: False
+bert_model: 'bert-large-uncased'
+bert_dropout: 0.4
+bert_dim: 1024
+bert_max_seq_len: 500
+bert_doc_stride: 250
+bert_layer_indexes: '0,24'
+
+
+# Training
+optimizer: 'adam'
+learning_rate: 0.00002 # 0.00002!
+grad_clipping: 10 # 10!
+grad_accumulated_steps: 1
+eary_stop_metric: 'Bleu_4'
+
+random_seed: 1234
+shuffle: True # Whether to shuffle the examples during training
+max_epochs: 100
+batch_size: 30 # 30!
+patience: 10
+verbose: 1000 # Print every X batches
+
+forcing_ratio: 0.8 # 0.8! # initial percentage of using teacher forcing
+partial_forcing: True  # in a seq, can some steps be teacher forced and some not? partial_forcing works much better as mentioned in the origin paper
+forcing_decay_type: 'exp'  # linear, exp, sigmoid, or None
+forcing_decay: 0.9999
+sample: False  # are non-teacher forced inputs based on sampling or greedy selection?
+# note: enabling reinforcement learning can significantly slow down training
+rl_ratio: 0.07  # use mixed objective if > 0; ratio of RL in the loss function
+rl_ratio_power: 1  #0.7 # increase rl_ratio by **= rl_ratio_power after each epoch; (0, 1]
+rl_start_epoch: 1  # start RL at which epoch (later start can ensure a strong baseline)?
+max_rl_ratio: 0.99
+rl_reward_metric: 'Bleu_4,ROUGE_L' # 'Bleu_4'
+rl_reward_metric_ratio: '1,0.02'
+rl_wmd_ratio: 0
+max_wmd_reward: 3
+
+
+# Testing
+out_len_in_words: False # Only for beam search
+out_predictions: True # Whether to output predictions
+save_params: True # Whether to save params
+logging: True # Turn it off for Codalab
+
+# Beam search
+beam_size: 5 # 5!
+min_out_len: 6 # Only for beam search
+max_out_len: 25 # Only for beam search
+block_ngram_repeat: 0 # Block repetition of ngrams during decoding. (To turn it off, set it to 0)
+
+
+# Device
+no_cuda: False
+cuda_id: -1
