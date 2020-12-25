@@ -20,11 +20,11 @@ Please take the following steps to create a python virtual environment.
 * Install the package requirements with `pip install -r requirements.txt`.
 
 
-In order to compute the meteor score, please download the required data from here (https://github.com/xinyadu/nqg/blob/master/qgevalcap/meteor/data/paraphrase-en.gz) and put it under the src/core/evaluation/meteor/data folder.
+In order to compute the meteor score, please download the required data from [here](https://github.com/xinyadu/nqg/blob/master/qgevalcap/meteor/data/paraphrase-en.gz) and put it under the src/core/evaluation/meteor/data folder.
 
 
 ### Run the QG model
-* Download the pretrained Glove word ebeddings [glove.840B.300d.zip](http://nlp.stanford.edu/data/wordvecs/glove.840B.300d.zip) and move `glove.840B.300d.txt` to the `data` folder in this repo.
+* Download the pretrained GloVe word ebeddings [glove.840B.300d.zip](http://nlp.stanford.edu/data/wordvecs/glove.840B.300d.zip) and move `glove.840B.300d.txt` to the `data` folder in this repo.
 * Download the data from [here](https://1drv.ms/u/s!AjiSpuwVTt09gVsFilSx0NpJlid-?e=1TKqfG) and move it to the `data` folder in this repo.
 * Cd into the `src` folder
 * Run the QG model and report the performance
