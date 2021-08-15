@@ -9,7 +9,7 @@ saved_vocab_file: '../data/mhqg-pq/vocab_model_min3'
 pretrained: null
 
 # Output
-out_dir: '../out/mhqg-pq/graph2seq'
+out_dir: '../out/mhqg-pq/graph2seq_ae'
 
 
 # Preprocessing
