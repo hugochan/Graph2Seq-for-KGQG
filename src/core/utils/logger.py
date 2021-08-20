@@ -17,8 +17,8 @@ class DummyLogger(object):
                 raise Exception('Directory already exists: {}'.format(dirname))
             os.makedirs(dirname)
 
-        if not os.path.exists(os.path.join(dirname, 'metrics')):
-            os.makedirs(os.path.join(dirname, 'metrics'))
+        if not os.path.exists(os.path.join(self.dirname, 'metrics')):
+            os.makedirs(os.path.join(self.dirname, 'metrics'))
 
         self.log_json(config, os.path.join(self.dirname, Constants._CONFIG_FILE))
         if config['logging']:
